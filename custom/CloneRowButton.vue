@@ -38,7 +38,7 @@ function redirectToCreatePage() {
         dataToFill[field.name] = props.record[field.name];
     }
     return dataToFill;
-}
+} 
 
 function save_btoa(str) {
   return btoa(str);
