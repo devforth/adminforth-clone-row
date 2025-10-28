@@ -1,5 +1,5 @@
 import { AdminForthPlugin } from "adminforth";
-import type { IAdminForth, IHttpServer, AdminForthResourcePages, AdminForthResourceColumn, AdminForthDataTypes, AdminForthResource } from "adminforth";
+import type { IAdminForth, IHttpServer, AdminForthResourceColumn, AdminForthResource, IAdminForthHttpResponse, AdminUser, AdminForthComponentDeclaration } from "adminforth";
 import type { PluginOptions } from './types.js';
 
 
@@ -14,6 +14,19 @@ export default class  extends AdminForthPlugin {
   async modifyResourceConfig(adminforth: IAdminForth, resourceConfig: AdminForthResource) {
     super.modifyResourceConfig(adminforth, resourceConfig);
   
+    if ( !resourceConfig.options.pageInjections ) {
+      resourceConfig.options.pageInjections = {};
+    }
+    if ( !resourceConfig.options.pageInjections.list ) {
+      resourceConfig.options.pageInjections.list = {};
+    }
+    if ( !resourceConfig.options.pageInjections.list.customActionIcons ) {
+      resourceConfig.options.pageInjections.list.customActionIcons = [];
+    }
+    (resourceConfig.options.pageInjections.list.customActionIcons as AdminForthComponentDeclaration[]).push(
+      { file: this.componentPath('CloneRowButton.vue'), meta: { pluginInstanceId: this.pluginInstanceId, resourceId: this.resourceConfig.resourceId } }
+    );
+
     // simply modify resourceConfig or adminforth.config. You can get access to plugin options via this.options;
   }
   
