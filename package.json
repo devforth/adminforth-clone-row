@@ -16,6 +16,7 @@
   "description": "",
   "devDependencies": {
     "@types/node": "latest",
+    "semantic-release-slack-bot": "^4.0.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
