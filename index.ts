@@ -37,18 +37,6 @@ export default class  extends AdminForthPlugin {
   instanceUniqueRepresentation(pluginOptions: any) : string {
     // optional method to return unique string representation of plugin instance. 
     // Needed if plugin can have multiple instances on one resource 
-    return `single`;
+    return `${this.resourceConfig.resourceId}-clone-row`;
   }
-
-  setupEndpoints(server: IHttpServer) {
-    server.endpoint({
-      method: 'POST',
-      path: `/plugin/${this.pluginInstanceId}/example`,
-      handler: async ({ body }) => {
-        const { name } = body;
-        return { hey: `Hello ${name}` };
-      }
-    });
-  }
-
 }
