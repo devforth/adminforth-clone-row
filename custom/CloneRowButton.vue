@@ -35,12 +35,17 @@ function redirectToCreatePage() {
     const fieldsToFill = { ...props.resource.columns.filter((col: any) => col.showIn.create === true) }
     let dataToFill = {};
     for (const field of Object.values(fieldsToFill)) {
+        if (field.foreignResource) {
+            dataToFill[field.name] = props.record[field.name]?.pk
+            continue;   
+        }
         dataToFill[field.name] = props.record[field.name];
     }
     return dataToFill;
 } 
 
 function save_btoa(str) {
-  return btoa(str);
+  const cleaned = str.replace(/\uFEFF/g, '');
+  return btoa(cleaned);
 }
 </script>
