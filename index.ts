@@ -28,14 +28,18 @@ export default class  extends AdminForthPlugin {
         { file: this.componentPath('CloneRowButton.vue'), meta: { pluginInstanceId: this.pluginInstanceId, resourceId: this.resourceConfig.resourceId } }
       );
     } else {
+      //TODO: after customActionIconsThreeDotsMenuItems will be released in adminforth.main, remove ts-ignore
+      //@ts-ignore
       if ( !resourceConfig.options.pageInjections.list.customActionIconsThreeDotsMenuItems ) {
+        //@ts-ignore
         resourceConfig.options.pageInjections.list.customActionIconsThreeDotsMenuItems = [];
       }
+      //@ts-ignore
       (resourceConfig.options.pageInjections.list.customActionIconsThreeDotsMenuItems as AdminForthComponentDeclaration[]).push(
         { file: this.componentPath('CloneRowThreeDots.vue'), meta: { pluginInstanceId: this.pluginInstanceId, resourceId: this.resourceConfig.resourceId } }
       );
     }
-    
+
     // simply modify resourceConfig or adminforth.config. You can get access to plugin options via this.options;
   }
   
