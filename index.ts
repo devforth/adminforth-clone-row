@@ -1,5 +1,5 @@
 import { AdminForthPlugin } from "adminforth";
-import type { IAdminForth, IHttpServer, AdminForthResourceColumn, AdminForthResource, IAdminForthHttpResponse, AdminUser, AdminForthComponentDeclaration } from "adminforth";
+import type { IAdminForth, AdminForthResource, AdminForthComponentDeclaration } from "adminforth";
 import type { PluginOptions } from './types.js';
 
 
@@ -20,13 +20,22 @@ export default class  extends AdminForthPlugin {
     if ( !resourceConfig.options.pageInjections.list ) {
       resourceConfig.options.pageInjections.list = {};
     }
-    if ( !resourceConfig.options.pageInjections.list.customActionIcons ) {
-      resourceConfig.options.pageInjections.list.customActionIcons = [];
+    if ( this.options.makeCloneButtonAsQuickAction ) {
+      if ( !resourceConfig.options.pageInjections.list.customActionIcons ) {
+        resourceConfig.options.pageInjections.list.customActionIcons = [];
+      }
+      (resourceConfig.options.pageInjections.list.customActionIcons as AdminForthComponentDeclaration[]).push(
+        { file: this.componentPath('CloneRowButton.vue'), meta: { pluginInstanceId: this.pluginInstanceId, resourceId: this.resourceConfig.resourceId } }
+      );
+    } else {
+      if ( !resourceConfig.options.pageInjections.list.customActionIconsThreeDotsMenuItems ) {
+        resourceConfig.options.pageInjections.list.customActionIconsThreeDotsMenuItems = [];
+      }
+      (resourceConfig.options.pageInjections.list.customActionIconsThreeDotsMenuItems as AdminForthComponentDeclaration[]).push(
+        { file: this.componentPath('CloneRowThreeDots.vue'), meta: { pluginInstanceId: this.pluginInstanceId, resourceId: this.resourceConfig.resourceId } }
+      );
     }
-    (resourceConfig.options.pageInjections.list.customActionIcons as AdminForthComponentDeclaration[]).push(
-      { file: this.componentPath('CloneRowButton.vue'), meta: { pluginInstanceId: this.pluginInstanceId, resourceId: this.resourceConfig.resourceId } }
-    );
-
+    
     // simply modify resourceConfig or adminforth.config. You can get access to plugin options via this.options;
   }
   

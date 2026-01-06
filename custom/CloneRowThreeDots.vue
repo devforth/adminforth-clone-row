@@ -1,18 +1,16 @@
 <template>
-    <Tooltip>
-        <RouterLink :to="{
-            name: `resource-create`,
-            params: { resourceId: props.meta.resourceId }, 
-            query: { 
-                values: save_btoa(JSON.stringify(redirectToCreatePage())),
-            }
-        }">
-            <IconFileCloneSolid class="w-5 h-5 me-2"/>
-        </RouterLink>
-        <template v-slot:tooltip>
-            {{ $t('Clone record') }}
-        </template>
-    </Tooltip>
+  <RouterLink 
+    class="flex px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+    :to="{
+      name: `resource-create`,
+      params: { resourceId: props.meta.resourceId }, 
+      query: { 
+          values: save_btoa(JSON.stringify(redirectToCreatePage())),
+      }
+    }">
+    <IconFileCloneSolid class="w-5 h-5 me-2 text-lightPrimary dark:text-darkPrimary"/>
+    {{ $t('Clone record') }}
+  </RouterLink>
 </template>
 
 <script lang="ts" setup>
