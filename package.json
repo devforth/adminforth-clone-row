@@ -32,6 +32,7 @@
       [
         "semantic-release-slack-bot",
         {
+          "packageName": "@adminforth/clone-row",
           "notifyOnSuccess": true,
           "notifyOnFail": true,
           "slackIcon": ":package:",
