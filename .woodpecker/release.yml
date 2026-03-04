@@ -23,6 +23,9 @@ steps:
     commands:
       - apt update && apt install -y rsync
       - . /woodpecker/deploy.vault.env   
+      - npm install --global corepack@latest
+      - corepack enable pnpm
+      - corepack use pnpm@latest-10
       - pnpm install
       - /bin/bash ./.woodpecker/buildRelease.sh
       - npm audit signatures
