@@ -39,6 +39,9 @@ steps:
           - main
     commands:
       - . /woodpecker/deploy.vault.env
+      - npm install --global corepack@latest
+      - corepack enable pnpm
+      - corepack use pnpm@latest-10
       - pnpm exec semantic-release
 
   slack-on-failure:
