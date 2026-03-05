@@ -17,7 +17,7 @@ steps:
       - infisical export --domain https://vault.devforth.io/api --format=dotenv-export --env="prod" > /woodpecker/deploy.vault.env
 
   build:
-    image: normanbeta/node:20-slim-pnpm
+    image: yaroslav87658765/node-pnpm
     when:
       - event: push
     commands:
@@ -28,7 +28,7 @@ steps:
       - npm audit signatures
 
   release:
-    image: normanbeta/node:20-slim-pnpm
+    image: yaroslav87658765/node-pnpm
     when:
       - event:
           - push
