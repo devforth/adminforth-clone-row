@@ -19,7 +19,7 @@
     "form-prefill",
     "productivity"
   ],
-  "author": "",
+  "author": "DevForth (https://devforth.io)",
   "license": "MIT",
   "description": "Record cloning plugin for AdminForth with one-click row duplication",
   "devDependencies": {
