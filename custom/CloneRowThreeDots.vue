@@ -4,9 +4,7 @@
     :to="{
       name: `resource-create`,
       params: { resourceId: props.meta.resourceId }, 
-      query: { 
-          values: save_btoa(JSON.stringify(redirectToCreatePage())),
-      }
+      query: cloneQuery
     }">
     <IconFileCloneSolid class="w-5 h-5 me-2 text-lightPrimary dark:text-darkPrimary"/>
     {{ $t('Clone record') }}
@@ -15,7 +13,9 @@
 
 <script lang="ts" setup>
 import { Tooltip } from '@/afcl';
+import { computed } from 'vue';
 import { AdminUser, type AdminForthResourceCommon } from '@/types';
+import { btoa_function } from '@/utils';
 import { IconFileCloneSolid } from '@iconify-prerendered/vue-flowbite';
 import { useI18n } from 'vue-i18n';
  
@@ -40,10 +40,14 @@ function redirectToCreatePage() {
         dataToFill[field.name] = props.record[field.name];
     }
     return dataToFill;
-} 
-
-function save_btoa(str) {
-  const cleaned = str.replace(/\uFEFF/g, '');
-  return btoa(cleaned);
 }
+
+const cloneQuery = computed(() => {
+    try {
+        return { values: btoa_function(JSON.stringify(redirectToCreatePage())) };
+    } catch (error) {
+        console.error('Failed to build clone query', error);
+        return {};
+    }
+});
 </script>
