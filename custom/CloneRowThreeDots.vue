@@ -5,7 +5,7 @@
       name: `resource-create`,
       params: { resourceId: props.meta.resourceId }, 
       query: { 
-          values: save_btoa(JSON.stringify(redirectToCreatePage())),
+          values: btoa_function(JSON.stringify(redirectToCreatePage())),
       }
     }">
     <IconFileCloneSolid class="w-5 h-5 me-2 text-lightPrimary dark:text-darkPrimary"/>
@@ -16,6 +16,7 @@
 <script lang="ts" setup>
 import { Tooltip } from '@/afcl';
 import { AdminUser, type AdminForthResourceCommon } from '@/types';
+import { btoa_function } from '@/utils';
 import { IconFileCloneSolid } from '@iconify-prerendered/vue-flowbite';
 import { useI18n } from 'vue-i18n';
  
@@ -40,10 +41,5 @@ function redirectToCreatePage() {
         dataToFill[field.name] = props.record[field.name];
     }
     return dataToFill;
-} 
-
-function save_btoa(str) {
-  const cleaned = str.replace(/\uFEFF/g, '');
-  return btoa(cleaned);
 }
 </script>
