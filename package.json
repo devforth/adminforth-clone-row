@@ -5,6 +5,10 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "homepage": "https://adminforth.dev/docs/tutorial/Plugins/clone-row/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devforth/adminforth-clone-row.git"
+  },
   "publishConfig": {
     "access": "public"
   },
