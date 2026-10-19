@@ -1,25 +1,19 @@
 <template>
-  <RouterLink 
-    class="flex px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-    :to="{
-      name: `resource-create`,
-      params: { resourceId: props.meta.resourceId }, 
-      query: cloneQuery
-    }">
-    <IconFileCloneSolid class="w-5 h-5 me-2 text-lightPrimary dark:text-darkPrimary"/>
+  <DropdownMenuItem
+    :class="['af-clone-row-menu-item', THREE_DOTS_MENU_ITEM_CLASSES]"
+    :to="cloneRoute(props.meta.resourceId, props.resource, props.record)"
+  >
+    <template #icon><IconCopy /></template>
     {{ $t('Clone record') }}
-  </RouterLink>
+  </DropdownMenuItem>
 </template>
 
 <script lang="ts" setup>
-import { Tooltip } from '@/afcl';
-import { computed } from 'vue';
-import { AdminUser, type AdminForthResourceCommon } from '@/types';
-import { btoa_function } from '@/utils';
-import { IconFileCloneSolid } from '@iconify-prerendered/vue-flowbite';
-import { useI18n } from 'vue-i18n';
- 
-const { t } = useI18n();
+import { DropdownMenuItem } from '@/afcl';
+import { type AdminUser, type AdminForthResourceCommon } from '@/types/Common';
+import { THREE_DOTS_MENU_ITEM_CLASSES } from '@/utils/threeDotsMenu';
+import { IconCopy } from '@iconify-prerendered/vue-lucide';
+import { cloneRoute } from './cloneRoute';
 
 const props = defineProps<{
     meta: any,
@@ -28,26 +22,4 @@ const props = defineProps<{
     record: any,
     updateRecords: Function,
 }>();
-
-function redirectToCreatePage() {
-    const fieldsToFill = { ...props.resource.columns.filter((col: any) => col.showIn.create === true) }
-    let dataToFill = {};
-    for (const field of Object.values(fieldsToFill)) {
-        if (field.foreignResource) {
-            dataToFill[field.name] = props.record[field.name]?.pk
-            continue;   
-        }
-        dataToFill[field.name] = props.record[field.name];
-    }
-    return dataToFill;
-}
-
-const cloneQuery = computed(() => {
-    try {
-        return { values: btoa_function(JSON.stringify(redirectToCreatePage())) };
-    } catch (error) {
-        console.error('Failed to build clone query', error);
-        return {};
-    }
-});
 </script>

@@ -1,27 +1,25 @@
 <template>
-    <Tooltip>
-        <RouterLink :to="{
-            name: `resource-create`,
-            params: { resourceId: props.meta.resourceId }, 
-            query: { 
-                values: save_btoa(JSON.stringify(redirectToCreatePage())),
-            }
-        }">
-            <IconFileCloneSolid class="w-5 h-5 me-2"/>
-        </RouterLink>
-        <template v-slot:tooltip>
-            {{ $t('Clone record') }}
-        </template>
-    </Tooltip>
+  <Tooltip>
+    <LinkButton
+      class="af-clone-row-button"
+      :to="cloneRoute(props.meta.resourceId, props.resource, props.record)"
+      variant="ghost"
+      size="sm"
+      iconOnly
+    >
+      <IconCopy />
+    </LinkButton>
+    <template v-slot:tooltip>
+      {{ $t('Clone record') }}
+    </template>
+  </Tooltip>
 </template>
 
 <script lang="ts" setup>
-import { Tooltip } from '@/afcl';
-import { AdminUser, type AdminForthResourceCommon } from '@/types';
-import { IconFileCloneSolid } from '@iconify-prerendered/vue-flowbite';
-import { useI18n } from 'vue-i18n';
- 
-const { t } = useI18n();
+import { LinkButton, Tooltip } from '@/afcl';
+import { type AdminUser, type AdminForthResourceCommon } from '@/types/Common';
+import { IconCopy } from '@iconify-prerendered/vue-lucide';
+import { cloneRoute } from './cloneRoute';
 
 const props = defineProps<{
     meta: any,
@@ -30,22 +28,4 @@ const props = defineProps<{
     record: any,
     updateRecords: Function,
 }>();
-
-function redirectToCreatePage() {
-    const fieldsToFill = { ...props.resource.columns.filter((col: any) => col.showIn.create === true) }
-    let dataToFill = {};
-    for (const field of Object.values(fieldsToFill)) {
-        if (field.foreignResource) {
-            dataToFill[field.name] = props.record[field.name]?.pk
-            continue;   
-        }
-        dataToFill[field.name] = props.record[field.name];
-    }
-    return dataToFill;
-} 
-
-function save_btoa(str) {
-  const cleaned = str.replace(/\uFEFF/g, '');
-  return btoa(cleaned);
-}
 </script>
